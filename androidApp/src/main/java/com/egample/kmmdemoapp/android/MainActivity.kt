@@ -3,64 +3,24 @@ package com.egample.kmmdemoapp.android
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Surface
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.egample.kmmdemoapp.ApiClient
-import kotlinx.coroutines.launch
-
-@Composable
-fun MyApplicationTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable () -> Unit
-) {
-    val colors = if (darkTheme) {
-        darkColors(
-            primary = Color(0xFFBB86FC),
-            primaryVariant = Color(0xFF3700B3),
-            secondary = Color(0xFF03DAC5)
-        )
-    } else {
-        lightColors(
-            primary = Color(0xFF6200EE),
-            primaryVariant = Color(0xFF3700B3),
-            secondary = Color(0xFF03DAC5)
-        )
-    }
-    val typography = Typography(
-        body1 = TextStyle(
-            fontFamily = FontFamily.Default,
-            fontWeight = FontWeight.Normal,
-            fontSize = 16.sp
-        )
-    )
-    val shapes = Shapes(
-        small = RoundedCornerShape(4.dp),
-        medium = RoundedCornerShape(4.dp),
-        large = RoundedCornerShape(0.dp)
-    )
-
-    MaterialTheme(
-        colors = colors,
-        typography = typography,
-        shapes = shapes,
-        content = content
-    )
-}
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.egample.kmmdemoapp.android.presentation.ScreenDetail
+import com.egample.kmmdemoapp.android.presentation.ScreenInput
+import com.egample.kmmdemoapp.android.presentation.input_name.ScreenInputId
+import com.egample.kmmdemoapp.android.presentation.navigateSingleTopTo
+import com.egample.kmmdemoapp.android.presentation.theme.MyApplicationTheme
+import com.egample.kmmdemoapp.android.presentation.user_detail.ScreenUserDetail
 
 class MainActivity : ComponentActivity() {
-
-    private val apiClient = ApiClient()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -69,18 +29,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    val scope = rememberCoroutineScope()
-                    var text by remember { mutableStateOf("Loading") }
-                    LaunchedEffect(true) {
-                        scope.launch {
-                            text = try {
-                                apiClient.getUserInfo().name
-                            } catch (e: Exception) {
-                                e.localizedMessage ?: "error"
-                            }
-                        }
-                    }
-                    Greeting(text)
+                    MyApp(
+                        modifier = Modifier.fillMaxSize(),
+                    )
                 }
             }
         }
@@ -88,7 +39,47 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(text: String) {
-    Text(text = text)
-}
+fun MyApp(
+    modifier: Modifier = Modifier,
+) {
 
+    val navController = rememberNavController()
+//    val currentBackStack by navController.currentBackStackEntryAsState()
+//    val currentDestination = currentBackStack?.destination
+//    val currentScreen = ScreenInput
+
+    Surface(modifier) {
+        Scaffold(
+            content = { innerPadding ->
+                NavHost(
+                    navController = navController,
+                    startDestination = ScreenInput.route,
+                    modifier = Modifier.padding(innerPadding)
+                ) {
+                    composable(
+                        route = ScreenInput.route
+                    ) {
+                        ScreenInputId(
+                            onNameSubmit = { name ->
+                                navController.navigateSingleTopTo(
+                                    "${ScreenDetail.route}/$name"
+                                )
+                            }
+                        )
+                    }
+
+                    composable(
+                        route = "${ScreenDetail.route}/{${ScreenDetail.ArgName}}",
+                        arguments = ScreenDetail.arguments
+                    ) {
+                        it.arguments?.getString(ScreenDetail.ArgName)?.let { it1 ->
+                            ScreenUserDetail(
+                                name = it1
+                            )
+                        }
+                    }
+                }
+            }
+        )
+    }
+}

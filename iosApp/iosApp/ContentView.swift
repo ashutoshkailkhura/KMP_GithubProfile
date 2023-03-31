@@ -13,10 +13,12 @@ extension ContentView {
     class ViewModel: ObservableObject {
         @Published var text = "Loading..."
         init() {
-            Greeting().greeting { greeting, error in
+//            let greet = ApiClient().getKMMText()
+//            self.text = greet
+            ApiClient().getUserInfo() { greeting, error in
                 DispatchQueue.main.async {
                     if let greeting = greeting {
-                        self.text = greeting
+                        self.text = greeting.name
                     } else {
                         self.text = error?.localizedDescription ?? "error"
                     }
