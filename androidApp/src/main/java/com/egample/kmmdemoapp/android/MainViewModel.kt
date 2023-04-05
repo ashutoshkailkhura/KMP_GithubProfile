@@ -24,12 +24,10 @@ class MainViewModel : ViewModel() {
             }.onSuccess {
                 _uiStateUserDetail.value = DetailUiState(
                     detail = it.toUserDetail(),
-                    error = false
                 )
             }.onFailure {
                 _uiStateUserDetail.value = DetailUiState(
                     detail = null,
-                    error = true
                 )
             }
         }
@@ -38,5 +36,4 @@ class MainViewModel : ViewModel() {
 
 data class DetailUiState(
     var detail: UserDetail? = null,
-    var error: Boolean = false,
 )

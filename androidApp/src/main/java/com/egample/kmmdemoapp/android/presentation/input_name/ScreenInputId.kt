@@ -1,12 +1,15 @@
 package com.egample.kmmdemoapp.android.presentation.input_name
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -34,38 +37,28 @@ fun InputScreen(
     modifier: Modifier = Modifier,
     onNameSubmit: (name: String) -> Unit,
 ) {
-
     var inputText by remember { mutableStateOf(TextFieldValue("")) }
     val keyboardController = LocalSoftwareKeyboardController.current
 
     Column(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier
+            .fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-            text = "Enter Name",
-            style = TextStyle(
-                fontWeight = FontWeight.Bold,
-                fontSize = 16.sp
-            ),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        )
-
         OutlinedTextField(
             value = inputText,
+            singleLine = true,
             leadingIcon = {
                 Icon(
-                    imageVector = Icons.Default.Email,
-                    contentDescription = "emailIcon"
+                    imageVector = Icons.Default.Person,
+                    contentDescription = "personIcon"
                 )
             },
             onValueChange = {
                 inputText = it
             },
-            label = { Text(text = "Email address") },
+            label = { Text(text = "Name") },
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
             keyboardActions = KeyboardActions(
                 onDone = { keyboardController?.hide() }),
@@ -75,16 +68,14 @@ fun InputScreen(
         )
 
         Button(
+            shape = RoundedCornerShape(12.dp),
             onClick = {
                 onNameSubmit(inputText.text)
             },
-            border = BorderStroke(1.dp, Color.Gray),
-            colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.Gray),
             modifier = Modifier
-                .fillMaxWidth()
                 .padding(16.dp)
         ) {
-            Text(text = "Button with border", color = Color.DarkGray)
+            Text(text = "CHECKOUT")
         }
     }
 }
