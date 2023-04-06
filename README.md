@@ -4,8 +4,8 @@ Trying out KMM for android and IOS
 1. using KTOR for network call
 
 <div align="center">
-    <img src="https://raw.github.com/ashutoshkailkhura/KMMGithubProfile/main/gif/android.gif" width="400px"</img> 
-    <img src="https://raw.github.com/ashutoshkailkhura/KMMGithubProfile/main/gif/ios.gif" width="400px"</img> 
+    <img src="https://raw.github.com/ashutoshkailkhura/KMMGithubProfile/main/gif/android.gif" width="300px"</img> 
+    <img src="https://raw.github.com/ashutoshkailkhura/KMMGithubProfile/main/gif/ios.gif" width="300px"</img> 
 </div>
 
 ## TODO
