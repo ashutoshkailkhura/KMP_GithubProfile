@@ -11,7 +11,8 @@ import shared
 
 struct ScreenInput: View {
     
-    @State var username: String = "planetoftheweb"
+    @State var selection: Int? = nil
+    @State var username: String = ""
     let sdk = ApiClient()
     
     var body: some View {
@@ -22,16 +23,25 @@ struct ScreenInput: View {
                 TextField("Enter username...", text: $username)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                 
-                NavigationLink("checkout"){
-                    ScreenDetail(
-                        viewModel: .init(sdk: sdk),name: $username
-                    )
-                }.overlay(
-                    RoundedRectangle(cornerRadius: 10.0)
-                        .stroke(lineWidth: 1.0)
-                        .shadow(color: .blue, radius: 10.0)
-                        .padding(12.0)
-                )
+                
+                NavigationLink(destination: ScreenDetail(
+                    viewModel: .init(sdk: sdk),username: $username
+                ), tag: 1, selection: $selection) {
+                    Button(action: {
+                        self.selection = 1
+                    }) {
+                        HStack {
+                            Spacer()
+                            Text("checkout").foregroundColor(Color.white).bold()
+                            Spacer()
+                        }
+                    }
+                    .accentColor(Color.black)
+                    .padding()
+                    .background(Color(UIColor.darkGray))
+                    .cornerRadius(4.0)
+                    .padding(Edge.Set.vertical, 20)
+                }
                 
                 
             }.padding(20.0)

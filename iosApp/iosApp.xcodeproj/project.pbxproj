@@ -13,6 +13,7 @@
 		491D753229D7E3A300E6E35C /* ScreenInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491D753129D7E3A300E6E35C /* ScreenInput.swift */; };
 		491D753529D7E7F000E6E35C /* ScreenDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491D753429D7E7F000E6E35C /* ScreenDetail.swift */; };
 		491D753729D7FB8F00E6E35C /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491D753629D7FB8F00E6E35C /* MainViewModel.swift */; };
+		497C497829DD980600CC597E /* ScreenProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497C497729DD980500CC597E /* ScreenProfile.swift */; };
 		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
 		AFCAA1C6E56E4331628D85D1 /* Pods_iosApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4BC6467935FCFF54CC479AA /* Pods_iosApp.framework */; };
 /* End PBXBuildFile section */
@@ -25,6 +26,7 @@
 		491D753129D7E3A300E6E35C /* ScreenInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenInput.swift; sourceTree = "<group>"; };
 		491D753429D7E7F000E6E35C /* ScreenDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenDetail.swift; sourceTree = "<group>"; };
 		491D753629D7FB8F00E6E35C /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		497C497729DD980500CC597E /* ScreenProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenProfile.swift; sourceTree = "<group>"; };
 		7555FF7B242A565900829871 /* iosApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iosApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7555FF82242A565900829871 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -57,6 +59,7 @@
 			children = (
 				491D753129D7E3A300E6E35C /* ScreenInput.swift */,
 				491D753429D7E7F000E6E35C /* ScreenDetail.swift */,
+				497C497729DD980500CC597E /* ScreenProfile.swift */,
 			);
 			path = presentation;
 			sourceTree = "<group>";
@@ -227,6 +230,7 @@
 				491D753729D7FB8F00E6E35C /* MainViewModel.swift in Sources */,
 				491D753529D7E7F000E6E35C /* ScreenDetail.swift in Sources */,
 				491D753229D7E3A300E6E35C /* ScreenInput.swift in Sources */,
+				497C497829DD980600CC597E /* ScreenProfile.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
 				7555FF83242A565900829871 /* ContentView.swift in Sources */,
 			);

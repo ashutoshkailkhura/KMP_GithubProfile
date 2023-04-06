@@ -12,40 +12,26 @@ import shared
 struct ScreenDetail: View {
     
     @ObservedObject private(set) var viewModel: ViewModel
-    @Binding var name:String
+    @Binding var username:String
     
     var body: some View {
-        
-        
-        
-        switch viewModel.detail {
-        case .loading:
-            return AnyView(
-                VStack{                    
-                    Button(action: {
-                        viewModel.getUserDetail()
-                    }, label: {
-                        Text("get detail for \(name)").font(.largeTitle .weight(.bold))
-                    })
-                }
-            )
-        case .result(let detail):
-            return AnyView(
-                VStack {
-                    //                    AsyncImage(url: URL(string: userDetail?.avatar_url ?? ""),scale: 2)
-                    //                        .frame(width: 128,height: 128)
-                    //                        .clipShape(RoundedRectangle(cornerRadius: 25))
-                    
-                    Text(detail.name).font(.largeTitle .weight(.bold))
-                    
-                    //                    Button("Reload") {
-                    //                        self.viewModel.getUserDetail()
-                    //                    }
-                }
-            )
-        case .error(let errorMsg):
-            return AnyView(Text(errorMsg).font(.largeTitle .weight(.bold)))
-        }
+        VStack {
+            switch viewModel.detail {
+            case .loading:
+                AnyView(
+                    Text("loading ...").font(.largeTitle .weight(.bold))
+                )
+            case .result(let detail):
+                AnyView(
+                    ScreenProfile(detail: detail)
+                )
+            case .error(let errorMsg):
+                AnyView(Text(errorMsg).font(.largeTitle .weight(.bold)))
+                
+            }
+        }.onAppear(perform: {
+            viewModel.getUserDetail(name: username)
+        })
     }
     
 }
@@ -60,19 +46,18 @@ extension ScreenDetail {
     
     class ViewModel: ObservableObject {
         
-        //        let username:String
+        
         let sdk:ApiClient
         
         @Published var detail = UserDetailState.loading
         
         init(sdk:ApiClient) {
             self.sdk=sdk
-            //            self.username=username
         }
         
-        func getUserDetail(){
+        func getUserDetail(name:String){
             self.detail = UserDetailState.loading
-            sdk.getDetail(name:"ashutoshkailkhura") { detail, error in
+            sdk.getDetail(name:name) { detail, error in
                 DispatchQueue.main.async {
                     if let detail = detail {
                         self.detail = UserDetailState.result(detail)
