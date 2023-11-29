@@ -23,7 +23,7 @@ class MainViewModel : ViewModel() {
                 sdk.getDetail(name)
             }.onSuccess {
                 _uiStateUserDetail.value = DetailUiState(
-                    detail = it.toUserDetail(),
+                    detail = it.data?.toUserDetail(),
                 )
             }.onFailure {
                 _uiStateUserDetail.value = DetailUiState(

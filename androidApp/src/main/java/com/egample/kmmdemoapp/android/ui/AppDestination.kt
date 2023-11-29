@@ -1,4 +1,4 @@
-package com.egample.kmmdemoapp.android.presentation
+package com.egample.kmmdemoapp.android.ui
 
 import androidx.navigation.NavController
 import androidx.navigation.NavType

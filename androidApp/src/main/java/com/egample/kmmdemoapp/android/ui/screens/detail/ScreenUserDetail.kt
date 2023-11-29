@@ -1,4 +1,4 @@
-package com.egample.kmmdemoapp.android.presentation.user_detail
+package com.egample.kmmdemoapp.android.ui.screens.detail
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background

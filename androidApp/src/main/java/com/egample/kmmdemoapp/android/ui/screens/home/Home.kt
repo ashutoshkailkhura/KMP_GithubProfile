@@ -1,30 +1,24 @@
-package com.egample.kmmdemoapp.android.presentation.input_name
+package com.egample.kmmdemoapp.android.ui.screens.home
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.egample.kmmdemoapp.android.ui.components.ItemHistoryText
 
 @Composable
-fun ScreenInputId(
+fun Home(
     modifier: Modifier = Modifier,
     onNameSubmit: (name: String) -> Unit,
 ) {
@@ -43,7 +37,6 @@ fun InputScreen(
     Column(
         modifier = modifier
             .fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         OutlinedTextField(
@@ -58,24 +51,33 @@ fun InputScreen(
             onValueChange = {
                 inputText = it
             },
-            label = { Text(text = "Name") },
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+            label = { Text(text = "Github User Name") },
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
             keyboardActions = KeyboardActions(
-                onDone = { keyboardController?.hide() }),
+                onSearch = {
+                    keyboardController?.hide()
+                    onNameSubmit(inputText.text)
+                }),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
         )
 
-        Button(
-            shape = RoundedCornerShape(12.dp),
-            onClick = {
-                onNameSubmit(inputText.text)
-            },
-            modifier = Modifier
-                .padding(16.dp)
-        ) {
-            Text(text = "CHECKOUT")
+//        TODO use local db to retrieve data
+
+        LazyColumn() {
+            item {
+                ItemHistoryText(label = "ashutoshkailkhura") { onNameSubmit(it) }
+            }
+            item {
+                ItemHistoryText(label = "skydoves") { onNameSubmit(it) }
+            }
+            item {
+                ItemHistoryText(label = "kunal-kushwaha") { onNameSubmit(it) }
+            }
+            item {
+                ItemHistoryText(label = "SebastianAigner") { onNameSubmit(it) }
+            }
         }
     }
 }
