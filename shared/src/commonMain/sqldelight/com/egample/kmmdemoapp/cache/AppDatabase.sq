@@ -1,0 +1,14 @@
+CREATE TABLE UserHistory (
+    username TEXT NOT NULL
+);
+
+insertUserName:
+INSERT INTO UserHistory(username)
+VALUES(?);
+
+removeHistory:
+DELETE FROM UserHistory;
+
+getUserHistory:
+SELECT *
+FROM UserHistory;

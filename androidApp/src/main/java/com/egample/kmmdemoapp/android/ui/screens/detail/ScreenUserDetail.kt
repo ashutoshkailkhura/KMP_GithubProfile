@@ -1,5 +1,6 @@
 package com.egample.kmmdemoapp.android.ui.screens.detail
 
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -7,6 +8,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -14,6 +16,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,9 +37,36 @@ fun ScreenUserDetail(
     name: String,
     viewModel: MainViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
 ) {
-    viewModel.getDetail(name)
     val uiState = viewModel.uiStateUserDetail.collectAsState()
-    SetUserDetail(detail = uiState.value.detail)
+
+    LaunchedEffect(Unit) {
+        Log.d("XXX", "ScreenUserDetail LaunchedEffect")
+        viewModel.getDetail(name)
+    }
+
+
+    if (uiState.value.loading == true) {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            CircularProgressIndicator()
+        }
+    }
+    if (uiState.value.error?.isNotEmpty() == true) {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(text = "Error ${uiState.value.error}")
+        }
+    }
+
+    if (uiState.value.detail != null) {
+        SetUserDetail(detail = uiState.value.detail)
+    }
 }
 
 @Composable

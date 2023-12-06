@@ -2,10 +2,19 @@ plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
     id("com.android.library")
-    kotlin("plugin.serialization").version("1.7.20")
+    kotlin("plugin.serialization") version embeddedKotlinVersion
+    id("com.squareup.sqldelight")
 }
 
 kotlin {
+
+    jvmToolchain(17)
+
+    java {
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of(17))
+        }
+    }
     android()
     iosX64()
     iosArm64()
@@ -23,13 +32,18 @@ kotlin {
     }
 
     sourceSets {
-        val ktorVersion = "2.1.2"
+        val coroutinesVersion = "1.7.3"
+        val ktorVersion = "2.3.5"
+        val sqlDelightVersion = "1.5.5"
+        val dateTimeVersion = "0.4.1"
+
         val commonMain by getting {
             dependencies {
                 implementation("io.ktor:ktor-client-core:$ktorVersion")
                 implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
                 implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
+                implementation("com.squareup.sqldelight:runtime:$sqlDelightVersion")
             }
         }
         val commonTest by getting {
@@ -40,6 +54,8 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
+                implementation("com.squareup.sqldelight:android-driver:$sqlDelightVersion")
+
             }
         }
 //        val androidTest by getting
@@ -53,6 +69,7 @@ kotlin {
             iosSimulatorArm64Main.dependsOn(this)
             dependencies {
                 implementation("io.ktor:ktor-client-darwin:$ktorVersion")
+                implementation("com.squareup.sqldelight:native-driver:$sqlDelightVersion")
             }
         }
         val iosX64Test by getting
@@ -65,6 +82,7 @@ kotlin {
             iosSimulatorArm64Test.dependsOn(this)
         }
     }
+
 }
 
 android {
@@ -73,5 +91,15 @@ android {
     defaultConfig {
         minSdk = 21
         targetSdk = 33
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+}
+
+sqldelight {
+    database("AppDatabase") {
+        packageName = "com.egample.kmmdemoapp.cache"
     }
 }
